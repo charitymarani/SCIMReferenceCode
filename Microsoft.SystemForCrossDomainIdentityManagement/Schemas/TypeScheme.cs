@@ -10,34 +10,31 @@ namespace Microsoft.SCIM
     using System.Runtime.Serialization;
 
     [DataContract]
-    public sealed class TypeScheme : IJsonSerializable
+    public sealed class TypeScheme : Schematized
     {
-        [DataMember(Name = AttributeNames.Attributes, Order = 0)]
         private List<AttributeScheme> attributes;
         private IReadOnlyCollection<AttributeScheme> attributesWrapper;
-
-        private IJsonSerializable serializer;
         private object thisLock;
 
         public TypeScheme()
         {
             this.OnInitialization();
             this.OnInitialized();
+            this.AddSchema(SchemaIdentifiers.Core2Schema);
+            this.Metadata =
+                new Core2Metadata()
+                {
+                    ResourceType = Types.Schema
+                };
         }
 
+        [DataMember(Name = AttributeNames.Attributes, Order = 0)]
         public IReadOnlyCollection<AttributeScheme> Attributes
         {
             get
             {
                 return this.attributesWrapper;
             }
-        }
-
-        [DataMember(Name = AttributeNames.Description)]
-        public string Description
-        {
-            get;
-            set;
         }
 
         [DataMember(Name = AttributeNames.Identifier)]
@@ -49,6 +46,20 @@ namespace Microsoft.SCIM
 
         [DataMember(Name = AttributeNames.Name)]
         public string Name
+        {
+            get;
+            set;
+        }
+
+        [DataMember(Name = AttributeNames.Description)]
+        public string Description
+        {
+            get;
+            set;
+        }
+
+        [DataMember(Name = AttributeNames.Metadata)]
+        public Core2Metadata Metadata
         {
             get;
             set;
@@ -98,25 +109,12 @@ namespace Microsoft.SCIM
         private void OnInitialization()
         {
             this.thisLock = new object();
-            this.serializer = new JsonSerializer(this);
             this.attributes = new List<AttributeScheme>();
         }
 
         private void OnInitialized()
         {
             this.attributesWrapper = this.attributes.AsReadOnly();
-        }
-
-        public string Serialize()
-        {
-            string result = this.serializer.Serialize();
-            return result;
-        }
-
-        public Dictionary<string, object> ToJson()
-        {
-            Dictionary<string, object> result = this.serializer.ToJson();
-            return result;
         }
     }
 }

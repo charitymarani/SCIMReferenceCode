@@ -70,7 +70,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme groupDisplayScheme = new AttributeScheme("displayName", AttributeDataType.String, false);
+                AttributeScheme groupDisplayScheme = new AttributeScheme("displayName", AttributeDataType.@string, false);
                 groupDisplayScheme.Description = SampleConstants.DescriptionGroupDisplayName;
                 groupDisplayScheme.Required = true;
                 groupDisplayScheme.Uniqueness = Uniqueness.server;
@@ -79,12 +79,84 @@ namespace Microsoft.SCIM.WebHostSample.Resources
             }
         }
 
+        public static AttributeScheme ValueSubAttributeScheme
+        {
+            get
+            {
+                AttributeScheme valueScheme = new AttributeScheme("value", AttributeDataType.@string, false);
+                valueScheme.Description = SampleConstants.DescriptionValue;
+                valueScheme.Mutability = Mutability.immutable;
+                return valueScheme;
+            }
+        }
+
+        public static AttributeScheme RefSubAttributeScheme
+        {
+            get
+            {
+                AttributeScheme refScheme = new AttributeScheme("$ref", AttributeDataType.reference, false);
+                refScheme.Description = SampleConstants.DescriptionRef;
+                refScheme.Mutability = Mutability.immutable;
+                refScheme.AddReferenceTypes(Types.User);
+                return refScheme;
+            }
+        }
+
+        public static AttributeScheme TypeSubAttributeScheme
+        {
+            get
+            {
+                AttributeScheme typeScheme = new AttributeScheme("type", AttributeDataType.@string, false);
+                typeScheme.Description = SampleConstants.DescriptionType;
+                typeScheme.Mutability = Mutability.immutable;
+                typeScheme.AddCanonicalValues(Types.Group);
+                typeScheme.AddCanonicalValues(Types.User);
+                return typeScheme;
+            }
+        }
+
+        public static AttributeScheme DisplaySubAttributeScheme
+        {
+            get
+            {
+                AttributeScheme typeScheme = new AttributeScheme("display", AttributeDataType.@string, false);
+                typeScheme.Description = SampleConstants.DescriptionDisplay;
+                return typeScheme;
+            }
+        }
+
+        public static AttributeScheme Type2SubAttributeScheme
+        {
+            get
+            {
+                AttributeScheme typeScheme = new AttributeScheme("type", AttributeDataType.@string, false);
+                typeScheme.Description = SampleConstants.DescriptionType;
+                typeScheme.AddCanonicalValues("work");
+                typeScheme.AddCanonicalValues("home");
+                typeScheme.AddCanonicalValues("other");
+                return typeScheme;
+            }
+        }
+
+        public static AttributeScheme PrimarySubAttributeScheme
+        {
+            get
+            {
+                AttributeScheme typeScheme = new AttributeScheme("primary", AttributeDataType.boolean, false);
+                typeScheme.Description = SampleConstants.DescriptionPrimary;
+                return typeScheme;
+            }
+        }
+
         public static AttributeScheme MembersAttributeScheme
         {
             get
             {
-                AttributeScheme membersScheme = new AttributeScheme("members", AttributeDataType.Complex, true);
+                AttributeScheme membersScheme = new AttributeScheme("members", AttributeDataType.complex, true);
                 membersScheme.Description = SampleConstants.DescriptionMemebers;
+                membersScheme.AddSubAttribute(ValueSubAttributeScheme);
+                membersScheme.AddSubAttribute(RefSubAttributeScheme);
+                membersScheme.AddSubAttribute(TypeSubAttributeScheme);
 
                 return membersScheme;
             }
@@ -94,7 +166,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme userNameScheme = new AttributeScheme("userName", AttributeDataType.String, false);
+                AttributeScheme userNameScheme = new AttributeScheme("userName", AttributeDataType.@string, false);
                 userNameScheme.Description = SampleConstants.DescriptionUserName;
                 userNameScheme.Required = true;
                 userNameScheme.Uniqueness = Uniqueness.server;
@@ -102,12 +174,38 @@ namespace Microsoft.SCIM.WebHostSample.Resources
             }
         }
 
+        public static AttributeScheme FormattedNameAttributeScheme
+        {
+            get
+            {
+
+                AttributeScheme formattedNameScheme = new AttributeScheme("formatted", AttributeDataType.@string, false);
+                formattedNameScheme.Description = SampleConstants.DescriptionFormattedName;
+                return formattedNameScheme;
+
+            }
+        }
+
+        public static AttributeScheme GivenNameAttributeScheme
+        {
+            get
+            {
+
+                AttributeScheme givenNameScheme = new AttributeScheme("givenName", AttributeDataType.@string, false);
+                givenNameScheme.Description = SampleConstants.DescriptionGivenName;
+                return givenNameScheme;
+
+            }
+        }
+
         public static AttributeScheme NameAttributeScheme
         {
             get
             {
-                AttributeScheme nameScheme = new AttributeScheme("name", AttributeDataType.Complex, false);
+                AttributeScheme nameScheme = new AttributeScheme("name", AttributeDataType.complex, false);
                 nameScheme.Description = SampleConstants.DescriptionName;
+                nameScheme.AddSubAttribute(FormattedNameAttributeScheme);
+                nameScheme.AddSubAttribute(GivenNameAttributeScheme);
                 return nameScheme;
             }
         }
@@ -116,7 +214,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme displayNameScheme = new AttributeScheme("displayName", AttributeDataType.String, false);
+                AttributeScheme displayNameScheme = new AttributeScheme("displayName", AttributeDataType.@string, false);
                 displayNameScheme.Description = SampleConstants.DescriptionDisplayName;
                 return displayNameScheme;
             }
@@ -126,7 +224,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme titleScheme = new AttributeScheme("title", AttributeDataType.String, false);
+                AttributeScheme titleScheme = new AttributeScheme("title", AttributeDataType.@string, false);
                 titleScheme.Description = SampleConstants.DescriptionTitle;
                 return titleScheme;
             }
@@ -136,7 +234,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme userTypeScheme = new AttributeScheme("userType", AttributeDataType.String, false);
+                AttributeScheme userTypeScheme = new AttributeScheme("userType", AttributeDataType.@string, false);
                 userTypeScheme.Description = SampleConstants.DescriptionUserType;
                 return userTypeScheme;
             }
@@ -146,7 +244,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme preferredLanguageScheme = new AttributeScheme("preferredLanguage", AttributeDataType.String, false);
+                AttributeScheme preferredLanguageScheme = new AttributeScheme("preferredLanguage", AttributeDataType.@string, false);
                 preferredLanguageScheme.Description = SampleConstants.DescriptionPreferredLanguage;
                 return preferredLanguageScheme;
             }
@@ -156,7 +254,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme preferredLanguageScheme = new AttributeScheme("locale", AttributeDataType.String, false);
+                AttributeScheme preferredLanguageScheme = new AttributeScheme("locale", AttributeDataType.@string, false);
                 preferredLanguageScheme.Description = SampleConstants.DescriptionLocale;
                 return preferredLanguageScheme;
             }
@@ -166,7 +264,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme activeScheme = new AttributeScheme("active", AttributeDataType.Boolean, false);
+                AttributeScheme activeScheme = new AttributeScheme("active", AttributeDataType.boolean, false);
                 activeScheme.Description = SampleConstants.DescriptionActive;
                 return activeScheme;
             }
@@ -176,8 +274,12 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme emailsScheme = new AttributeScheme("emails", AttributeDataType.Complex, true);
+                AttributeScheme emailsScheme = new AttributeScheme("emails", AttributeDataType.complex, true);
                 emailsScheme.Description = SampleConstants.DescriptionEmails;
+                emailsScheme.AddSubAttribute(ValueSubAttributeScheme);
+                emailsScheme.AddSubAttribute(DisplaySubAttributeScheme);
+                emailsScheme.AddSubAttribute(Type2SubAttributeScheme);
+                emailsScheme.AddSubAttribute(PrimarySubAttributeScheme);
                 return emailsScheme;
             }
         }
@@ -186,18 +288,46 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme phoneNumbersScheme = new AttributeScheme("phoneNumbers", AttributeDataType.Complex, true);
+                AttributeScheme phoneNumbersScheme = new AttributeScheme("phoneNumbers", AttributeDataType.complex, true);
                 phoneNumbersScheme.Description = SampleConstants.DescriptionPhoneNumbers;
+                phoneNumbersScheme.AddSubAttribute(ValueSubAttributeScheme);
+                phoneNumbersScheme.AddSubAttribute(DisplaySubAttributeScheme);
+                phoneNumbersScheme.AddSubAttribute(Type2SubAttributeScheme);
+                phoneNumbersScheme.AddSubAttribute(PrimarySubAttributeScheme);
                 return phoneNumbersScheme;
             }
         }
+        public static AttributeScheme FormattedAddressAttributeScheme
+        {
+            get
+            {
 
+                AttributeScheme formattedAddressScheme = new AttributeScheme("formatted", AttributeDataType.@string, false);
+                formattedAddressScheme.Description = SampleConstants.DescriptionFormattedAddress;
+                return formattedAddressScheme;
+
+            }
+        }
+        public static AttributeScheme StreetAddressAttributeScheme
+        {
+            get
+            {
+
+                AttributeScheme streetAddressScheme = new AttributeScheme("streetAddress", AttributeDataType.@string, false);
+                streetAddressScheme.Description = SampleConstants.DescriptionStreetAddress;
+                return streetAddressScheme;
+
+            }
+        }
         public static AttributeScheme AddressesAttributeScheme
         {
             get
             {
-                AttributeScheme addressesScheme = new AttributeScheme("addresses", AttributeDataType.Complex, true);
+                AttributeScheme addressesScheme = new AttributeScheme("addresses", AttributeDataType.complex, true);
                 addressesScheme.Description = SampleConstants.DescriptionAddresses;
+                addressesScheme.AddSubAttribute(FormattedAddressAttributeScheme);
+                addressesScheme.AddSubAttribute(StreetAddressAttributeScheme);
+                addressesScheme.AddSubAttribute(Type2SubAttributeScheme);
                 return addressesScheme;
             }
         }
@@ -206,8 +336,11 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme managerScheme = new AttributeScheme("manager", AttributeDataType.Complex, false);
+                AttributeScheme managerScheme = new AttributeScheme("manager", AttributeDataType.complex, false);
                 managerScheme.Description = SampleConstants.DescriptionManager;
+                managerScheme.AddSubAttribute(ValueSubAttributeScheme);
+                managerScheme.AddSubAttribute(RefSubAttributeScheme);
+                managerScheme.AddSubAttribute(DisplayNameAttributeScheme);
                 return managerScheme;
             }
         }
@@ -216,7 +349,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme employeeNumberScheme = new AttributeScheme("employeeNumber", AttributeDataType.String, false);
+                AttributeScheme employeeNumberScheme = new AttributeScheme("employeeNumber", AttributeDataType.@string, false);
                 employeeNumberScheme.Description = SampleConstants.DescriptionEmployeeNumber;
                 return employeeNumberScheme;
             }
@@ -226,7 +359,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme costCenterScheme = new AttributeScheme("costCenter", AttributeDataType.String, false);
+                AttributeScheme costCenterScheme = new AttributeScheme("costCenter", AttributeDataType.@string, false);
                 costCenterScheme.Description = SampleConstants.DescriptionCostCenter;
                 return costCenterScheme;
             }
@@ -236,7 +369,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme organizationScheme = new AttributeScheme("organization", AttributeDataType.String, false);
+                AttributeScheme organizationScheme = new AttributeScheme("organization", AttributeDataType.@string, false);
                 organizationScheme.Description = SampleConstants.DescriptionOrganization;
                 return organizationScheme;
             }
@@ -246,7 +379,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme divisionScheme = new AttributeScheme("division", AttributeDataType.String, false);
+                AttributeScheme divisionScheme = new AttributeScheme("division", AttributeDataType.@string, false);
                 divisionScheme.Description = SampleConstants.DescriptionDivision;
                 return divisionScheme;
             }
@@ -256,7 +389,7 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         {
             get
             {
-                AttributeScheme departmentScheme = new AttributeScheme("department", AttributeDataType.String, false);
+                AttributeScheme departmentScheme = new AttributeScheme("department", AttributeDataType.@string, false);
                 departmentScheme.Description = SampleConstants.Descriptiondepartment;
                 return departmentScheme;
             }

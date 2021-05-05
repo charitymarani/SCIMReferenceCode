@@ -52,8 +52,19 @@ namespace Microsoft.SCIM.WebHostSample.Resources
         public const string DescriptionUserType = "Used to identify the relationship between the organization and the user.  " +
             "Typical values used might be \"Contractor\", \"Employee\", \"Intern\", \"Temp\", \"External\", and \"Unknown\", " +
             "but any value may be used.";
-
-
-
+        public const string DescriptionValue = "The significant value for the attribute";
+        public const string DescriptionRef = "The reference URI of a target resource";
+        public const string DescriptionType = "A label indicating the attribute's function";
+        public const string DescriptionFormattedName = "The full name, including all middle " +
+            "names, titles, and suffixes as appropriate, formatted for display e.g., 'Ms. Barbara J Jensen, III').";
+        public const string DescriptionGivenName = "The given name of the User, or" +
+            " first name in most Western languages(e.g., 'Barbara' given the full name 'Ms. Barbara J Jensen, III').";
+        public const string DescriptionDisplay = "A human-readable name, primarily used for display purposes.READ-ONLY.";
+        public const string DescriptionPrimary = "A Boolean value indicating the 'primary' " + " or preferred attribute value for this attribute, e.g., the preferred" +
+            " mailing address or primary email address.The primary attribute value 'true' MUST appear no more than once.";
+        public const string DescriptionStreetAddress = "The full street address component, which may include house number, street name, P.O.box, and multi-line" +
+            "extended street address information.This attribute MAY contain newlines.";
+        public const string DescriptionFormattedAddress = "The full mailing address, formatted for display or use with a mailing label." +
+            " This attribute MAY contain newlines.";
     }
 }
